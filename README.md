@@ -1,3 +1,12 @@
+## Datos
+Estudiante: Sebastian Reyes Mendoza 
+RUT: 20.022.897-9 
+Carrera: Ingenieria Civil en Informatica
+node ver 16.16.0
+Librerias utilizadas: 
+lorem-ipsum https://www.npmjs.com/package/lorem-ipsum
+@mui/icons-material
+
 <p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
 
 <p align="center">

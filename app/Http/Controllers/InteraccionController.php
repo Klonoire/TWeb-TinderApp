@@ -15,6 +15,8 @@ class InteraccionController extends Controller
     public function index()
     {
         //
+        $interaccion= interaccion::all();
+        return view('interaccion.index', compact('interaccion'));
     }
 
     /**
@@ -44,9 +46,11 @@ class InteraccionController extends Controller
      * @param  \App\Models\Interaccion  $interaccion
      * @return \Illuminate\Http\Response
      */
-    public function show(Interaccion $interaccion)
+    public function show($id)
     {
         //
+        $interaccion= interaccion::where('id','=',$id)->get();
+        return view('interaccion.index', compact('interaccion'));
     }
 
     /**

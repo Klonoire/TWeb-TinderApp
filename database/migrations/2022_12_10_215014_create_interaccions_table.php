@@ -14,13 +14,13 @@ class CreateInteraccionsTable extends Migration
     public function up()
     {
         Schema::create('interaccions', function (Blueprint $table) {
-            $table->id('interaccion_id');
+            $table->id('id');
             $table->bigInteger('perro_interesado_id')->unsigned();
-            $table->foreign('perro_interesado_id')->references('perro_id')->on('perros');
+            $table->foreign('perro_interesado_id')->references('id')->on('perros');
             $table->bigInteger('perro_candidato_id')->unsigned();
-            $table->foreign('perro_candidato_id')->references('perro_id')->on('perros');
+            $table->foreign('perro_candidato_id')->references('id')->on('perros');
             $table->char('preferencia');
-            $table->dateTimeTz('created_at', $precision = 0);
+            $table->timestamp('created_at')->nullable();
         });
     }
 

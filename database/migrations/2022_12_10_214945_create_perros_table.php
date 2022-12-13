@@ -14,8 +14,8 @@ class CreatePerrosTable extends Migration
     public function up()
     {
         Schema::create('perros', function (Blueprint $table) {
-            $table->id('perro_id');
-            $table->string('perro_nombre');
+            $table->id('id');
+            $table->string('perro_nombre', 30);
             $table->string('perro_foto');
             $table->char('perro_descripcion', 150);
             $table->timestamps();

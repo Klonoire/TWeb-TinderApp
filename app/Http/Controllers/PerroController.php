@@ -15,6 +15,9 @@ class PerroController extends Controller
     public function index()
     {
         //
+        $perro= perro::all();
+
+        return view('perro.index', compact('perro'));
     }
 
     /**
@@ -25,6 +28,7 @@ class PerroController extends Controller
     public function create()
     {
         //
+        return view('perro.create');
     }
 
     /**
@@ -36,6 +40,28 @@ class PerroController extends Controller
     public function store(Request $request)
     {
         //
+        $campos=[
+            'perro_nombre'=>'required|string|max:30',
+            'perro_descripcion'=>'required|string|max:150',
+            'perro_foto' =>'required|image|max:2048'
+        ];
+        $mensaje=[
+            "perro_nombre.required"=>'El nombre del perro es requerido',
+            "perro_nombre.string"=>'El nombre debe poseer numeros o letras',
+            "perro_nombre.max"=>'El nombre del perro no puede contener mas de 30 caracteres',
+            "perro_descripcion.required"=>'La descripción del perro es requerida',
+            "perro_descripcion.string"=>'La descripción debe poseer numeros o letras',
+            "perro_descripcion.max"=>'La descripción del perro no puede contener mas de 150 caracteres',
+            "perro_foto.required"=>'La URL de la foto del perro es requerida',
+            "perro_foto.max"=>'El tamaño maximo del archivo es 2 MB'
+        ];
+        $this->validate($request,$campos,$mensaje);
+        $datosPerro=$request->except('_token');
+        if($request->hasFile('perro_foto')){
+            $datosPerro['perro_foto']=$request->file('perro_foto')->store('uploads', 'public');
+        }
+        Perro::insert($datosPerro);
+        return redirect('perro')->with('mensaje', 'Perro ingresado con éxito.');
     }
 
     /**
@@ -55,9 +81,11 @@ class PerroController extends Controller
      * @param  \App\Models\Perro  $perro
      * @return \Illuminate\Http\Response
      */
-    public function edit(Perro $perro)
+    public function edit($perro_id)
     {
         //
+        $perfil=Perro::where('id',$perro_id)->firstorFail();
+        return view('perro.edit', compact('perfil'));
     }
 
     /**
@@ -67,9 +95,28 @@ class PerroController extends Controller
      * @param  \App\Models\Perro  $perro
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Perro $perro)
+    public function update(Request $request, $perro_id)
     {
         //
+        $campos=[
+            'perro_nombre'=>'required|string|max:30',
+            'perro_descripcion'=>'required|string|max:150',
+            'perro_foto' =>'required|image|max:2048'
+        ];
+        $mensaje=[
+            "perro_nombre.required"=>'El nombre del perro es requerido',
+            "perro_nombre.string"=>'El nombre debe poseer numeros o letras',
+            "perro_nombre.max"=>'El nombre del perro no puede contener mas de 30 caracteres',
+            "perro_descripcion.required"=>'La descripción del perro es requerida',
+            "perro_descripcion.string"=>'La descripción debe poseer numeros o letras',
+            "perro_descripcion.max"=>'La descripción del perro no puede contener mas de 150 caracteres',
+            "perro_foto.required"=>'La URL de la foto del perro es requerida',
+            "perro_foto.max"=>'El tamaño maximo del archivo es 2 MB'
+        ];
+        $this->validate($request,$campos,$mensaje);
+        $datosPerro=$request->except('_token', '_method');
+        Perro::where('id','=',$perro_id)->update($datosPerro);
+        return redirect('perro')->with('mensaje', 'Datos de Perro editados exitosamente.');
     }
 
     /**
@@ -78,8 +125,10 @@ class PerroController extends Controller
      * @param  \App\Models\Perro  $perro
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Perro $perro)
+    public function destroy($perro_id)
     {
         //
+        perro::destroy($perro_id);
+        return redirect('perro')->with('mensaje', 'Perro retirado exitosamente');
     }
 }
