@@ -3,6 +3,7 @@ Estudiante: Sebastian Reyes Mendoza
 RUT: 20.022.897-9 
 Carrera: Ingenieria Civil en Informatica
 node ver 16.16.0
+Laravel Framework 8.83.27
 Librerias utilizadas: 
 lorem-ipsum https://www.npmjs.com/package/lorem-ipsum
 @mui/icons-material
