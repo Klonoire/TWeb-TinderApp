@@ -17,7 +17,7 @@ class PerroController extends Controller
         //
         $perro= perro::all();
 
-        return view('perro.index', compact('perro'));
+        return Perro::orderBy('created_at', 'asc')->get();
     }
 
     /**
@@ -29,6 +29,12 @@ class PerroController extends Controller
     {
         //
         return view('perro.create');
+    }
+    public function candidato(){
+        $db = Perro::whereHas('interaccions', function ($query){
+            $query->where('preferencia', 'A');
+        })->get();
+        return $db;
     }
 
     /**
@@ -61,7 +67,7 @@ class PerroController extends Controller
             $datosPerro['perro_foto']=$request->file('perro_foto')->store('uploads', 'public');
         }
         Perro::insert($datosPerro);
-        return redirect('perro')->with('mensaje', 'Perro ingresado con éxito.');
+        return response()->json($datosPerro, status:201);
     }
 
     /**
@@ -70,11 +76,10 @@ class PerroController extends Controller
      * @param  \App\Models\Perro  $perro
      * @return \Illuminate\Http\Response
      */
-    public function show(Perro $perro)
+    public function show($perro_id)
     {
-        //
+        return Perro::findorFail($perro_id);
     }
-
     /**
      * Show the form for editing the specified resource.
      *
@@ -116,7 +121,7 @@ class PerroController extends Controller
         $this->validate($request,$campos,$mensaje);
         $datosPerro=$request->except('_token', '_method');
         Perro::where('id','=',$perro_id)->update($datosPerro);
-        return redirect('perro')->with('mensaje', 'Datos de Perro editados exitosamente.');
+        return response()->json($datosPerro, status:201);
     }
 
     /**
@@ -128,7 +133,9 @@ class PerroController extends Controller
     public function destroy($perro_id)
     {
         //
-        perro::destroy($perro_id);
-        return redirect('perro')->with('mensaje', 'Perro retirado exitosamente');
+        $perro = Perro::findorFail($perro_id);
+        if($perro->delete()){
+            return response()->json('Perro retirado exitosamente', status:201);
+        }
     }
 }

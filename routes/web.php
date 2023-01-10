@@ -21,3 +21,4 @@ Route::get('/', function () {
 
 Route::resource('perro', PerroController::class);
 Route::resource('interaccion', InteraccionController::class);
+Route::get('api/perros/candidato', [PerroController::class, 'candidato']);

@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\InteraccionController;
+use App\Http\Controllers\PerroController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -17,3 +19,6 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+Route::get('api/perros/candidato', [PerroController::class, 'candidato']);
+Route::resource('perros', PerroController::class);
+Route::resource('interaccions', InteraccionController::class);
