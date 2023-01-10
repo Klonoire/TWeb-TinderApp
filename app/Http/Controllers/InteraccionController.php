@@ -98,7 +98,7 @@ class InteraccionController extends Controller
     public function show($id)
     {
         //
-        return Interaccion::where('peero_interesado_id','=',$id)->get();
+        return Interaccion::where('perro_interesado_id',$id)->get();
     }
 
     /**
